@@ -25,13 +25,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_ESC,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                            KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,  KC_DEL,
+      KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                            KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,  KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_TAB, LT(6, KC_A), LT(7, KC_R), LT(5, KC_S), LSFT_T(KC_T), KC_G, KC_M, RSFT_T(KC_N), LT(4, KC_E), KC_I, KC_O, KC_BSPC,
+      KC_ESC, LT(6, KC_A), LT(7, KC_R), LT(5, KC_S), LSFT_T(KC_T), KC_G, KC_M, RSFT_T(KC_N), LT(4, KC_E), KC_I, KC_O, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTRL, SCMD_T(KC_Z), KC_X, KC_C, KC_D, KC_V, KC_K, KC_H, KC_COMM, KC_DOT, SCMD_T(KC_SLSH), KC_RCTRL,
+      MO(1), SCMD_T(KC_X), KC_C, KC_D, KC_V, KC_Z, KC_K, KC_H, KC_COMM, KC_DOT, SCMD_T(KC_SLSH), KC_RALT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          MO(1), KC_LCMD,  KC_SPC,     KC_ENT,   KC_RCMD, KC_RALT
+                                          KC_LCTRL, KC_LCMD, KC_SPC,   KC_ENT, KC_RCMD, KC_RCTRL
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -112,27 +112,20 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 }
 
 #define L_BASE 0
-#define L_LOWER 2
-#define L_RAISE 4
-#define L_ADJUST 8
+#define L_SYM_LEFT 4
+#define L_SYM_RIGHT 5
 
 void oled_render_layer_state(void) {
     oled_write_P(PSTR("Layer: "), false);
     switch (layer_state) {
         case L_BASE:
-            oled_write_ln_P(PSTR("Default"), false);
+            oled_write_ln_P(PSTR("Colemak-DH"), false);
             break;
-        case L_LOWER:
-            oled_write_ln_P(PSTR("Lower"), false);
+        case L_SYM_LEFT:
+            oled_write_ln_P(PSTR("Symbols"), false);
             break;
-        case L_RAISE:
-            oled_write_ln_P(PSTR("Raise"), false);
-            break;
-        case L_ADJUST:
-        case L_ADJUST|L_LOWER:
-        case L_ADJUST|L_RAISE:
-        case L_ADJUST|L_LOWER|L_RAISE:
-            oled_write_ln_P(PSTR("Adjust"), false);
+        case L_SYM_RIGHT:
+            oled_write_ln_P(PSTR("Symbols"), false);
             break;
     }
 }
